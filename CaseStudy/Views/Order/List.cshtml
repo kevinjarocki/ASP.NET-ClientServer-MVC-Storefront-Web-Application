@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "List";
+}
+<link href="~/css/vuemodal.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<div id="orders">
+    <div class="col-sm-3">&nbsp;</div>
+    <div class="col-sm-6 col-xs-12" style="margin-top:5%;">
+        <div class="panel panel-default">
+            <div class="panel-title text-center">
+                <h3>Past Orders</h3>
+                <img src="../images/cart.gif" class="medium-img" />
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <td style="background-color: teal; color:white;" class="text-center">#</td>
+                            <th style="background-color: teal; color:white;" class="text-center">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr href="#" v-for="order in orders" v-on:click="orderForModal=order;loadAndShowModal();">
+                            <td>{{order.id}}</td>
+                            <td>{{formatDate(order.orderDate)}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <modal v-if="showModal" v-on:close="showModal = false" :order="orderForModal"
+           :details="detailsForModal"></modal>
+</div>
+<script src="~/js/orderlist.js"></script>
+<!-- template for the modal component -->
+<script type="text/x-template" id="modal-template">
+    <transition name="modal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <slot name="header">
+                            <span class="row">
+                                <button type="button" class="btn btn-link closeModalX pull-right" v-on:click="$emit('close')">
+                                    X
+                                </button>
+                            </span>
+                            <div class="row" style="top:-50px;position:relative">
+                                <label class="col-xs-4 control-label">Order:{{order.id}}</label>
+                                <label class="col-xs-7 text-right control-label">{{formatDate(order.orderDate)}}</label>
+                            </div>
+                            <span class="col-xs-12 text-center">
+                                <img src="../images/clock.gif" class="medium-img" />
+                            </span>
+                        </slot>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group">
+                            <li style="background-color: teal; color:white;" class="list-group-item disabled row">
+                                <span class="col-xs-2 text-center">Product</span>
+                                <span class="col-xs-2">MSRP</span>
+                                <span class="col-xs-2">QtyS</span>
+                                <span class="col-xs-2">QtyO</span>
+                                <span class="col-xs-2">QtyB</span>
+                                <span class="col-xs-2">Extended</span>
+                            </li>
+                            <li v-for="detail in details" class="list-group-item row">
+                                <span class="col-xs-2 text-left">{{detail.productId}}</span>
+                                <span class="col-xs-2">${{detail.sellingPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}}</span>
+                                <span class="col-xs-2">{{detail.qtySold}}</span>
+                                <span class="col-xs-2">{{detail.qtyOrdered}}</span>
+                                <span class="col-xs-2">{{detail.qtyBackOrdered}}</span>
+                                <span class="col-xs-2">${{detail.extended.toLocaleString(undefined, {minimumFractionDigits: 2})}}</span>
+                            </li>
+                        </ul>
+                        <div class="modal-footer">
+                            <slot name="footer">
+                                <div v-if="details[0]" class="text-right">
+                                    <span class="col-xs-10">Sub Total:</span>
+                                    <span class="col-xs-2">${{details[0].subTot.toLocaleString(undefined, {minimumFractionDigits: 2})}}</span>
+                                    <span class="col-xs-10">Tax:</span>
+                                    <span class="col-xs-2">${{(details[0].subTot * 0.13).toLocaleString(undefined, {minimumFractionDigits: 2})}}</span>
+                                    <span class="col-xs-10">Order Total</span>
+                                    <span class="col-xs-2">${{(details[0].subTot * 1.13).toLocaleString(undefined, {minimumFractionDigits: 2})}}</span>
+                                </div>
+                            </slot>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+</script>

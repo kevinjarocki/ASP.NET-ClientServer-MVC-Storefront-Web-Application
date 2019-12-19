@@ -1,0 +1,146 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="text-center padTop10">
+    <h6>&copy;Info3067 - 2017</h6>
+    <br />
+    <h4>@ViewBag.Message</h4>
+</div>
+<!-- modal code -->
+<div class="modal" id="register_popup">
+    <div class="modal-dialog">
+        <div class="modal-content col-xs-12">
+            <div class="modal-header">
+                <a href="" style="font-size:xx-large" data-dismiss="modal" class="pull-right">X</a>
+                <div class="text-center">
+                    <img src="~/images/register.png" style="height:15%;width:15%;" />
+                    <h3>Please Register!</h3>
+                </div>
+            </div>
+            <div class="modal-body loginbody">
+                <form asp-controller="Register" asp-action="Register" method="post" class="form-horizontal" role="form"
+                      id="registerForm">
+                    <div class="tabbable" id="myTabs">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#personal" data-toggle="tab">Demographic</a></li>
+                            <li><a href="#address" data-toggle="tab">Address</a></li>
+                            <li><a href="#account" data-toggle="tab">Account</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="personal">
+                                <div class="form-group" style="padding-left:5%;padding-top:5%;">
+                                    <label asp-for="Firstname" class="col-xs-4 control-label"></label>
+                                    <div class="col-xs-7" style="padding-left:5%;">
+                                        <input asp-for="Firstname" class="form-control" placeholder="First Name" />
+                                        <span asp-validation-for="Firstname" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="padding-left:5%;">
+                                    <label asp-for="Lastname" class="col-xs-4 control-label"></label>
+                                    <div class="col-xs-7" style="padding-left:5%;">
+                                        <input asp-for="Lastname" class="form-control" placeholder="Last Name" />
+                                        <span asp-validation-for="Lastname" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="padding-left:5%;">
+                                    <label asp-for="Age" class="col-xs-4 control-label"></label>
+                                    <div class="col-xs-7" style="padding-left:5%;">
+                                        <input asp-for="Age" type="number" placeholder="0" />
+                                        <span asp-validation-for="Age" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="padding-left:5%;">
+                                    <label asp-for="CreditcardType" class="col-xs-4 control-label"></label>
+                                    <select class="col-xs-4 form-control" style="width:auto; margin-left:5%;" asp-for="CreditcardType">
+                                        <option value="0">Select Credit Card Type</option>
+                                        <option value="1">Visa</option>
+                                        <option value="2">MasterCard</option>
+                                        <option value="3">American Express</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="address">
+                                <div class="form-group" style="padding-top:5%;">
+                                    <label asp-for="Address1" class="col-xs-4 control-label"></label>
+
+                                    <a href="~/Models/Product.cs"></a>      <div class="col-xs-7" style="padding-left:5%;">
+                                        <input asp-for="Address1" class="form-control" placeholder="Enter Address" />
+                                        <span asp-validation-for="Address1" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="City" class="col-xs-4 control-label"></label>
+                                    <div class="col-xs-7" style="padding-left:5%;">
+                                        <input asp-for="City" class="form-control" placeholder="Enter City" />
+                                        <span asp-validation-for="City" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Region" class="col-xs-4 control-label"></label>
+                                    <div class="col-xs-7" style="padding-left:5%;">
+                                        <input asp-for="Region" class="form-control" placeholder="Enter Region" />
+                                        <span asp-validation-for="Region" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Country" class="col-xs-4 control-label"></label>
+                                    <select class="col-xs-4 form-control" style="width:auto; margin-left:5%;" asp-for="Country">
+                                        <option value="0">Select Country</option>
+                                        <option value="1">France</option>
+                                        <option value="2">Turkey</option>
+                                        <option value="3">Canada</option>
+                                        <option value="4">United States</option>
+                                        <option value="5">Austria</option>
+                                        <option value="6">United Kingdom</option>
+                                        <option value="7">Poland</option>
+                                        <option value="8">Russia</option>
+                                        <option value="9">China</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Mailcode" class="col-xs-4 control-label"></label>
+                                    <div class="col-xs-7" style="padding-left:5%;">
+                                        <input asp-for="Mailcode" class="form-control" placeholder="Enter Postal Code" />
+                                        <span asp-validation-for="Mailcode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="account">
+                                <div class="form-group" style="padding-top:5%;">
+                                    <label asp-for="Email" class="col-xs-4 control-label"></label>
+                                    <div class="col-xs-7" style="padding-left:5%;">
+                                        <input asp-for="Email" type="email" class="form-control" placeholder="Enter valid Email" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Password" class="col-xs-4 control-label"></label>
+                                    <div class="col-xs-7" style="padding-left:5%;">
+                                        <input asp-for="Password" type="password" class="form-control" placeholder="Enter password" />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="RepeatPassword" class="col-xs-4 control-label">Repeat PW</label>
+                                    <div class="col-xs-7" style="padding-left:5%;">
+                                        <input asp-for="RepeatPassword" type="password" class="form-control" placeholder="Enter same password" />
+                                        <span asp-validation-for="RepeatPassword" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12 text-center">
+                                        <button type="submit" class="btn btn-default">Register</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div><!-- modal-body -->
+            <div class="modal-footer" id="footer">
+                <h4>@ViewBag.Message</h4>
+            </div><!-- modal-footer-->
+        </div><!--modal-content-->
+    </div><!--modal-dialog-->
+</div><!--modal--> 

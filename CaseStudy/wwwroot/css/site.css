@@ -25,6 +25,19 @@
 #qrCode {
     margin: 15px;
 }
+.branch-padding-10 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.googlemap {
+    height: 70%;
+    width: 100%;
+    margin-top: -90px;
+    min-height: 300px;
+}
 
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {

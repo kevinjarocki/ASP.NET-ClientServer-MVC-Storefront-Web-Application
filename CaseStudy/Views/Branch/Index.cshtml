@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+<link href="~/css/vuemodal.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFeOfe9156dSSdzKXLnBp7wOeI72NPmS0">
+</script>
+<div id="branches">
+    <div class="text-center">
+        <img src="~/images/map.jpg" style="height:10%;width:10%;" />
+        <h3 class="panel-heading">Find Some Branches Near You</h3>
+        <b>Your Address:</b>
+        <p><input type="text" v-model="address" class="branch-padding-10" /></p>
+        <p><i style="font-size:xx-small">Example: London, ON or N5Y5R6 or 1460 Oxford St., London On</i></p>
+        <input type="button" v-on:click="loadAndShowModal();" value="locate" class="btn btndefault" />
+    </div>
+<branchmodal v-if="showModal" v-on:close="showModal = false" :lat="lat":lng="lng"></branchmodal>
+</div>
+<script src="~/js/branchmap.js"></script>
+<!-- template for the modal component -->
+<script type="text/x-template" id="modal-template">
+    <transition name="modal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <slot name="header">
+                            <span class="row">
+                                <button type="button" class="btn btn-link closeModalX pull-right" v-on:click="$emit('close')">X</button>
+                            </span>
+                            <div class="row text-center" style="top:-60px;position:relative;">
+                                <h3>3 Closest Branches</h3>
+                            </div>
+                        </slot>
+                    </div>
+                    <div class="modal-body">
+                        <div id="map" class="googlemap"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <slot name="footer">
+                        </slot>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+</script>
